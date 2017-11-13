@@ -9,6 +9,7 @@ package jp.ac.uryukyu.ie.e175720;
  * Created by tnal on 2016/11/13.
  */
 public class Hero extends LivingThing {
+    int hitPoint;
     /**
      * コンストラクタ。名前、最大HP、攻撃力を指定する。
      * @param name ヒーロー名
@@ -17,9 +18,9 @@ public class Hero extends LivingThing {
      */
     public Hero (String name, int maximumHP, int attack) {
         super(name, maximumHP, attack);
-        dead = false;
-    }
+        this.hitPoint = maximumHP;
 
+    }
     /**
      * getterメソッドと同等。生死をboolean表現しているためメソッド名をisDead()とした。
      * @return boolean
@@ -31,9 +32,14 @@ public class Hero extends LivingThing {
      */
     @Override
     public void wounded(int damage){
-        hitPoint -= damage;
-        if( hitPoint < 0 ) {
-            dead = true;
+        int HP  = getHitPoint();
+        HP -= damage;
+        setHitPoint(HP);
+        if( HP < 0 ) {
+            boolean death = getDead();
+            death = true;
+            setDead(death);
+            String name = getName();
             System.out.printf("勇者%sは道半ばで力尽きてしまった。\n", name);
         }
     }
